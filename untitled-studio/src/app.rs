@@ -11,7 +11,7 @@ impl Default for UntitledStudioApp {
     fn default() -> Self {
         let mut tree = Tree::new(vec!["Map View".to_owned()]);
         
-        let [_, b] = tree.split_left(NodeIndex::root(), 0.3, vec!["Project Tree".to_owned()]);
+        let [_, b] = tree.split_left(NodeIndex::root(), 0.14, vec!["Project Tree".to_owned()]);
         let [_, _] = tree.split_below(b, 0.5, vec!["Object View".to_owned()]);
 
         UntitledStudioApp {
@@ -112,6 +112,12 @@ impl eframe::App for UntitledStudioApp {
                     });
                 });
             });
+            
+            egui::TopBottomPanel::bottom("status_bar").show(ctx, |ui| {
+                egui::menu::bar(ui, |ui| {
+                    ui.label(self.status.clone());
+                });
+            });
 
             DockArea::new(&mut self.tree)
                 .style(Style::from_egui(ctx.style().as_ref()))
@@ -123,12 +129,6 @@ impl eframe::App for UntitledStudioApp {
                         status: &mut self.status,
                     },
                 );
-            
-            egui::TopBottomPanel::bottom("status_bar").show(ctx, |ui| {
-                egui::menu::bar(ui, |ui| {
-                    ui.label(self.status.clone());
-                });
-            });
         }
         
         if self.modified {

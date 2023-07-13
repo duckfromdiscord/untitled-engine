@@ -15,6 +15,10 @@ pub fn game_script(project: Project) -> String {
     return script;
 }
 
+pub fn html(project: Project) -> String {
+    return HTML.replace("%TITLE%", &html_escape::encode_text(&project.name));
+}
+
 pub fn game_html_script(project: Project) -> (String, String) {
-    return (HTML.to_string(), game_script(project));
+    return (html(project.clone()), game_script(project));
 }

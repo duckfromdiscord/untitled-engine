@@ -12,3 +12,5 @@ Cargo.lock
 *.pdb
 
 testoutputs/*.xml
+
+/test

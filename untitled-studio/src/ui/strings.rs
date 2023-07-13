@@ -1,0 +1,12 @@
+pub const MODIFIED: &str = "Modified. Please save.";
+pub const SAVE_FIRST: &str = "Please save your project first.";
+pub const SAVE_COMPLETE: &str = "Save complete.";
+pub const ERR_WRITING: &str = "Error writing to file. Your data is NOT saved.";
+pub const ERR_CREATING: &str = "Error creating file to save to. Your data is NOT saved.";
+pub const JS_SAVED: &str = "JS output game saved.";
+pub const ERR_CREATING_JS: &str = "Error creating JS/HTML output file. Your export is NOT saved.";
+pub const ERR_WRITING_JS: &str = "Error writing to JS/HTML output file. Your export is NOT saved.";
+pub const ERR_CREATING_DIR: &str = "Error creating output directory. Your data is NOT saved.";
+pub const ERR_CREATING_RS: &str = "Error creating Rust output file. Your export is NOT saved.";
+pub const ERR_WRITING_RS: &str = "Error writing to Rust output file. Your export is NOT saved.";
+pub const RS_SAVED: &str = "Rust output game saved.";

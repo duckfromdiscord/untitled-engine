@@ -1,8 +1,10 @@
-use crate::project::Project;
-use egui::{Label, Sense, Stroke, Color32, Pos2};
+use std::ops::Add;
 
-use crate::project::map::Map;
-use crate::project::FocusedObjectType;
+use egui::{Label, Sense, Color32, Pos2, Vec2, Rounding, Stroke};
+
+use untitled_ir::project::map::Map;
+use untitled_ir::project::FocusedObjectType;
+use untitled_ir::project::Project;
 
 pub struct TabViewer<'a> {
     pub project: &'a mut Project,
@@ -80,23 +82,40 @@ impl TabViewer<'_> {
                     *self.modified = true;
                 }
             });
+            ui.collapsing("Resources", |ui| {
+                if ui.button(egui::RichText::new(egui_phosphor::FOLDER_PLUS.to_string()).size(16.0)).clicked() {
+                    
+                }
+            });
         });
     }
     #[allow(unused_variables, unused_mut)]
     fn map_view(&mut self, ui: &mut egui::Ui) {
         egui::Frame::canvas(ui.style()).show(ui, |ui| {
+
+                let current_map = &self.project.maps[self.project.selected_map_index];
+                let map_size = Vec2::new(current_map.size.0.into(), current_map.size.1.into());
+                let map_color = Color32::from_rgb(current_map.color.r, current_map.color.g, current_map.color.b);
+
                 let size = ui.available_size();
                 let (mut response, painter) =
                     ui.allocate_painter(ui.available_size_before_wrap(), Sense::drag());
                 let to_screen = emath::RectTransform::from_to(
-                        egui::Rect::from_min_size(Pos2::ZERO, response.rect.square_proportions()),
+                    egui::Rect::from_min_size(Pos2::ZERO, response.rect.size()),
                         response.rect,
                 );
                 let from_screen = to_screen.inverse();
-                painter.line_segment([to_screen * Pos2::new(0.0,0.0), to_screen * Pos2::new(size.x, size.y)], Stroke::new(2.0, Color32::RED));
+                
+                let window_center = to_screen * Pos2::new( 20.0,20.0);
+
+                // Editor background
+                painter.rect_filled([to_screen * Pos2::new(0.0,0.0), to_screen * Pos2::new(size.x, size.y)].into(), Rounding::none(), Color32::from_gray(20));
+                
+                // Map background
+                painter.rect_filled([window_center, window_center.add(map_size)].into(), Rounding::none(), map_color);
+                
                 
                 painter
-                // TODO: add map drawing
         });
     }
     fn object_view(&mut self, ui: &mut egui::Ui) {
@@ -106,6 +125,15 @@ impl TabViewer<'_> {
                     ui.horizontal(|ui| {
                         ui.label("Project Name");
                         ui.text_edit_singleline(&mut self.project.name);
+                    });
+                    ui.horizontal(|ui| {
+                        ui.label("Window Size");
+                        let mut width: String = self.project.window_size.0.to_string();
+                        let mut height: String = self.project.window_size.1.to_string();
+                        ui.add(egui::TextEdit::singleline(&mut width).desired_width(90.0));
+                        ui.add(egui::TextEdit::singleline(&mut height).desired_width(90.0));
+                        self.project.window_size.0 = width.parse::<usize>().unwrap_or(1080);
+                        self.project.window_size.1 = height.parse::<usize>().unwrap_or(720);
                     });
                 });
             },

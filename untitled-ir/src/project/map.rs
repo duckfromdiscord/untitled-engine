@@ -8,6 +8,7 @@ pub struct Map {
     pub internals: MapInternals,
     pub name: String,
     pub color: RGB8,
+    pub size: (u16, u16),
 }
 
 impl Map {
@@ -15,7 +16,8 @@ impl Map {
         Map {
             internals: MapInternals::new(),
             name,
-            color: RGB8 {r:255, g:255, b:255},
+            color: RGB8 {r:0, g:0, b:0},
+            size: (1080, 720),
         }
     }
 }

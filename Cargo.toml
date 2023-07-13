@@ -1,5 +1,7 @@
 [workspace]
 members = [
     "untitled-studio",
-    "untitled-framework",
+    "untitled-rs",
+    "untitled-js",
+    "untitled-ir",
 ]

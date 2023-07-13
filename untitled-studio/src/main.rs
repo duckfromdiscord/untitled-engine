@@ -3,7 +3,8 @@
 
 #[cfg(not(target_arch = "wasm32"))]
 fn main() -> eframe::Result<()> {
-    let native_options = eframe::NativeOptions::default();
+    let mut native_options = eframe::NativeOptions::default();
+    native_options.maximized = true;
     eframe::run_native(
         "Untitled-Studio",
         native_options,

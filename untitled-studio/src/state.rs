@@ -1,4 +1,4 @@
-use crate::project::Project;
+use untitled_ir::project::Project;
 use egui_dock::Tree;
 
 pub struct UntitledStudioApp {

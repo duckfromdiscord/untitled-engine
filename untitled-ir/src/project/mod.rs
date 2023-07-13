@@ -16,6 +16,7 @@ pub enum FocusedObjectType {
 pub struct Project {
     pub name: String,
     pub maps: Vec<Map>,
+    pub window_size: (usize, usize),
     pub selected_map_index: usize,
     pub focused_object_type: FocusedObjectType,
     pub focused_object_index: usize,
@@ -26,6 +27,7 @@ impl Default for Project {
         Project {
             name: "New project".to_string(),
             maps: vec![Map::new("Map 0".into())],
+            window_size: (1080, 720),
             selected_map_index: 0,
             focused_object_type: FocusedObjectType::Project,
             focused_object_index: 0,
